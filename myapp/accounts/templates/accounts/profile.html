@@ -1,0 +1,8 @@
+<div class="xp-bar">
+    <h2>XP Progress</h2>
+    <div class="xp-bar-container">
+        <div class="xp-bar-fill" style="width: {{ profile.xp_percentage }}%;"></div>
+    </div>
+    <p><strong>XP:</strong> {{ profile.xp }} {% if profile.rank != "Steez" %}/ {{ profile.xp_to_next_level }}{% endif %}</p>
+    <p><strong>Rank:</strong> {{ profile.rank }}</p>
+</div>
