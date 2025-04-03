@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="profile-header">
+        <h1 class="gradient-text">{{ profile.user.username }}</h1>
+        <div class="rank-badge gradient-text">{{ profile.rank }}</div>
+    </div>
+
+    <div class="button-group">
+        <a href="{% url 'welcome' %}" class="neon-btn small">🏠 Home</a>
+        <a href="{% url 'logout' %}" class="neon-btn pink-btn small">🔒 Logout</a>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h2 class="gradient-text">XP Progress</h2>
+    <div class="xp-bar">
+        <div class="xp-progress" style="width: {{ profile.xp_percentage }}%;"></div>
+    </div>
+    <div class="stats-grid two-column">
+        <div class="stat-item">
+            <h3>Current XP</h3>
+            <p class="gradient-text">{{ profile.xp }}</p>
+        </div>
+        <div class="stat-item">
+            <h3>Next Rank</h3>
+            <p class="gradient-text">
+                {% if profile.rank != "Steez" %}
+                    {{ profile.xp_to_next_level }} XP
+                {% else %}
+                    MAX RANK
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h2 class="gradient-text">Drink Stats</h2>
+    <div class="stats-grid three-column">
+        <div class="stat-item">
+            <p>🍺 Beers: {{ profile.beer }}</p>
+            <p>🥃 Floco: {{ profile.floco }}</p>
+        </div>
+        <div class="stat-item">
+            <p>🍹 Rum: {{ profile.rum }}</p>
+            <p>🥃 Whiskey: {{ profile.whiskey }}</p>
+        </div>
+        <div class="stat-item">
+            <p>🍸 Vodka: {{ profile.vodka }}</p>
+            <p>🍶 Tequila: {{ profile.tequila }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h2 class="gradient-text">Performance</h2>
+    <div class="stats-grid two-column">
+        <div class="stat-item">
+            <p>💥 Shotguns: {{ profile.shotguns }}</p>
+            <p>🤿 Snorkels: {{ profile.snorkels }}</p>
+        </div>
+        <div class="stat-item">
+            <p>🤢 Thrown Up: {{ profile.thrown_up }}</p>
+            <p class="gradient-text">Total Alcohol: {{ profile.calculate_alcohol_drank }} ml</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .rank-badge {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        border: 1px solid var(--neon-cyan);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+    
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin: 1.5rem 0;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    @media (max-width: 768px) {
+        .profile-header {
+            flex-direction: column;
+            align-items: stretch;
+            text-align: center;
+        }
+        
+        .rank-badge {
+            align-self: center;
+        }
+        
+        .button-group {
+            flex-direction: column;
+        }
+        
+        .button-group .neon-btn {
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        
+        .stats-grid.three-column,
+        .stats-grid.two-column {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}

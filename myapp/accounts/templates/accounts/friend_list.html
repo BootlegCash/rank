@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-card">
+    <h2 class="gradient-text">Your Friends</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        {% for friend in friends %}
+        <div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0; padding: 0.8rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--hot-pink); margin-right: 1rem;"></div>
+                <p>{{ friend.user.username }}</p>
+            </div>
+            <p>{{ friend.xp }} XP</p>
+        </div>
+        {% empty %}
+        <p>You have no friends yet. Add some!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="glass-card">
+    <h3>Friend Requests</h3>
+    
+    <div style="margin-top: 1rem;">
+        <h4>Received</h4>
+        {% for request in received_requests %}
+        <div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0; padding: 0.8rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+            <p>{{ request.from_user.user.username }}</p>
+            <div>
+                <a href="{% url 'accept_friend_request' request.id %}" class="neon-btn" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Accept</a>
+                <a href="{% url 'reject_friend_request' request.id %}" class="neon-btn pink-btn" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Reject</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No pending requests</p>
+        {% endfor %}
+    </div>
+    
+    <div style="margin-top: 1.5rem;">
+        <h4>Sent</h4>
+        {% for request in sent_requests %}
+        <div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0; padding: 0.8rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+            <p>{{ request.to_user.user.username }}</p>
+            <p>Pending</p>
+        </div>
+        {% empty %}
+        <p>No sent requests</p>
+        {% endfor %}
+    </div>
+    
+    <div style="margin-top: 1.5rem; text-align: center;">
+        <a href="{% url 'send_friend_request' %}" class="neon-btn">Add Friend</a>
+    </div>
+</div>
+{% endblock %}

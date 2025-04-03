@@ -1,0 +1,132 @@
+{% extends 'accounts/auth_base.html' %}
+
+{% block title %}Register - Drink Masters{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="register-header">
+        <h1 style="text-align: center; color: var(--hot-pink); text-shadow: 0 0 10px var(--hot-pink);">🍻 Join Drink Masters</h1>
+        <p style="text-align: center; color: #aaa; margin-bottom: 2rem;">Create your account to get started</p>
+    </div>
+
+    <form method="POST" class="register-form">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        <div class="alert-error">
+            ❌ Please fix the errors below
+        </div>
+        {% endif %}
+
+        <div class="form-group" style="width: 90%; margin: 0 auto 1.5rem;">
+            <input type="text" name="username" id="id_username" 
+                   class="form-input" placeholder="Username" 
+                   value="{{ form.username.value|default:'' }}" required>
+            {% if form.username.errors %}
+                <div class="error-text">{{ form.username.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group" style="width: 90%; margin: 0 auto 1rem;">
+            <input type="password" name="password1" id="id_password1" 
+                   class="form-input" placeholder="Password" required>
+            <div class="password-requirements">
+                <small style="color: #777; display: block; margin-top: 0.5rem;">
+                    Password must be at least 8 characters long
+                </small>
+            </div>
+            {% if form.password1.errors %}
+                <div class="error-text">{{ form.password1.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group" style="width: 90%; margin: 0 auto 1.5rem;">
+            <input type="password" name="password2" id="id_password2" 
+                   class="form-input" placeholder="Confirm Password" required>
+            {% if form.password2.errors %}
+                <div class="error-text">{{ form.password2.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="submit-btn">Create Account</button>
+
+        <div class="auth-links" style="text-align: center; margin-top: 1.5rem;">
+            <p style="color: #aaa;">Already have an account? <a href="{% url 'login' %}" style="color: var(--neon-cyan); text-decoration: none;">Log in</a></p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 10px rgba(0, 254, 252, 0.3);
+    }
+
+    .form-input::placeholder {
+        color: #555;
+    }
+
+    .alert-error {
+        padding: 12px;
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid #ff3232;
+        border-radius: 8px;
+        color: #ff6b6b;
+        text-align: center;
+        margin: 0 auto 1.5rem;
+        width: 90%;
+    }
+
+    .error-text {
+        color: #ff6b6b;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+    }
+
+    .submit-btn {
+        width: 90%;
+        padding: 12px;
+        margin: 0 auto;
+        display: block;
+        background: linear-gradient(90deg, var(--hot-pink), #ff6b9e);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+    }
+
+    .password-requirements small {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+</style>
+{% endblock %}

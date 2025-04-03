@@ -1,0 +1,167 @@
+{% extends 'accounts/auth_base.html' %}
+
+{% block title %}Login - Drink Masters{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="login-header">
+        <h1 class="neon-glow" style="text-align: center;">🍻 Drink Masters</h1>
+        <p style="text-align: center; color: #aaa; margin-bottom: 2rem;">Log in to your account</p>
+    </div>
+
+    <form method="POST" class="login-form">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        <div class="alert-error">
+            ❌ Invalid username or password
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <input type="text" name="username" id="username" 
+                   class="form-input" placeholder="Username" 
+                   autofocus required>
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="password" id="password" 
+                   class="form-input" placeholder="Password" required>
+            <button type="button" class="toggle-password">👁️</button>
+        </div>
+
+        <button type="submit" class="submit-btn">Login</button>
+
+        <div class="auth-links">
+            <a href="{% url 'register' %}">Create account</a>
+            
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    .form-input {
+        width: 90%;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 10px rgba(0, 254, 252, 0.3);
+    }
+
+    .form-input::placeholder {
+        color: #555;
+    }
+
+    .alert-error {
+        padding: 12px;
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid #ff3232;
+        border-radius: 8px;
+        color: #ff6b6b;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(90deg, var(--hot-pink), #ff6b9e);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #aaa;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .auth-links {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .auth-links a {
+        color: #aaa;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .auth-links a:hover {
+        color: var(--neon-cyan);
+    }
+
+    .auth-links span {
+        color: #555;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle password visibility
+        const toggleBtn = document.querySelector('.toggle-password');
+        const passwordInput = document.getElementById('password');
+        
+        if (toggleBtn && passwordInput) {
+            toggleBtn.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+            });
+        }
+
+        // Add focus effects
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.background = 'rgba(255, 255, 255, 0.15)';
+            });
+            input.addEventListener('blur', function() {
+                this.style.background = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+    });
+</script>
+{% endblock %}
